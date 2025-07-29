@@ -41,11 +41,35 @@ public class UnitController : MonoBehaviour
             {
                 foreach (NavMeshAgent agent in selectedUnits)
                 {
-                    agent.SetDestination(hit.point);
+                    MoveUnitsWithSpacing(hit.point, selectedUnits);
                 }
             }
         }
     }
+
+
+    /// <summary>
+    /// ユニットが一定距離を保って移動
+    /// </summary>
+    public void MoveUnitsWithSpacing(Vector3 targetPosition, List<NavMeshAgent> selectedAgents)
+    {
+        float spacing = 1.5f; // ユニット間の距離
+        int count = selectedAgents.Count;
+        int columns = Mathf.CeilToInt(Mathf.Sqrt(count)); //列
+        int rows = Mathf.CeilToInt((float)count / columns);//行
+
+        for (int i = 0; i < count; i++)
+        {
+            int row = i / columns;
+            int col = i % columns;
+
+            Vector3 offset = new Vector3((col - columns / 2) * spacing, 0, (row - rows / 2) * spacing);
+            Vector3 finalPosition = targetPosition + offset;
+
+            selectedAgents[i].SetDestination(finalPosition);
+        }
+    }
+
 
     public void AddSelectedUnit(NavMeshAgent agent)
     {
