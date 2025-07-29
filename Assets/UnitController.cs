@@ -21,13 +21,13 @@ public class UnitController : MonoBehaviour
                 if (!unit.isSelected)
                 {
                     unit.SetSelected(true);
-                    selectedUnits.Add(unit.GetComponent<NavMeshAgent>());
+                    AddSelectedUnit(unit.GetComponent<NavMeshAgent>());
                     Debug.Log("ユニットを選択: " + unit.name);
                 }
                 else
                 {
                     unit.SetSelected(false);
-                    selectedUnits.Remove(unit.GetComponent<NavMeshAgent>());
+                    RemoveSelectedUnit(unit.GetComponent<NavMeshAgent>());
                     Debug.Log("ユニット選択を解除: " + unit.name);
                 }
             }
@@ -45,5 +45,20 @@ public class UnitController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void AddSelectedUnit(NavMeshAgent agent)
+    {
+        selectedUnits.Add(agent);
+    }
+
+    public void RemoveSelectedUnit(NavMeshAgent agent)
+    {
+        selectedUnits.Remove(agent);
+    }
+
+    public void ClearSelectedAgent()
+    {
+        selectedUnits.Clear();
     }
 }

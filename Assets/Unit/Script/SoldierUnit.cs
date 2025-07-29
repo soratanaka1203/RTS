@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class SoldierUnit : MonoBehaviour
+public class SoldierUnit : UnitBase
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        
-    }
+        base.Awake(); // UnitBase ÇÃ Awake ÇåƒÇ—èoÇ∑
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        maxHealth = 150f;
+        currentHealth = maxHealth;
+
+        attackPower = 20f;
     }
 }
