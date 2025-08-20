@@ -87,7 +87,7 @@ public class UnitBase : MonoBehaviour
 
     public virtual void Attack(UnitBase target)
     {
-        if (canAttack && target != null)
+        if (canAttack && target != null && teamId != target.teamId)
         {
             ChangeState(UnitState.Combat);
             // 射程内チェック
