@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class SoldierUnit : UnitBase
+public class EnemyUnit : UnitBase
 {
     protected override void Awake()
     {
@@ -13,6 +12,5 @@ public class SoldierUnit : UnitBase
         currentHealth = maxHealth;
 
         attackPower = 20f;
-        defensePower = 10f;
     }
 }
