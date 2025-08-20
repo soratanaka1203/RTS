@@ -11,7 +11,7 @@ public class UnitBase : MonoBehaviour
     public float attackPower = 10f;
 
     [Header("陣営情報")]
-    public int teamId = 0; // 0: プレイヤー, 1: 敵など
+    public int teamId = 0; // 0: プレイヤー, 1: 敵
 
     [Header("選択状態")]
     public bool isSelected = false;
