@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static Interface;
 using static UnityEngine.GraphicsBuffer;
 
 public class UnitBase : MonoBehaviour
@@ -17,14 +18,13 @@ public class UnitBase : MonoBehaviour
     public float attackRange = 2f;        // 攻撃射程
     public float attackCooldown = 1.5f;   // 攻撃間隔（秒）
     protected bool canAttack = true;
-    protected UnitBase attackTarget;
-
+    protected IAttackable attackTarget;
     public float moveSpeed = 3.5f;        // 移動速度
-
     public UnitState currentState = UnitState.Idle;//ユニットの状態
 
-    [Header("陣営情報")]
-    public int teamId = 0; // 0: プレイヤー, 1: 敵
+    public Team TeamId { get;  set; } = Team.Player;
+    public bool IsAlive => currentHealth > 0;
+    public Vector3 Position => transform.position;
 
     [Header("選択状態")]
     public bool isSelected = false;
@@ -48,7 +48,7 @@ public class UnitBase : MonoBehaviour
                 break;
 
             case UnitState.Combat:
-                MoveTo(attackTarget.gameObject.transform.position); 
+                MoveTo(attackTarget.Position); 
                 Attack(attackTarget);
                 break;
 
@@ -66,17 +66,35 @@ public class UnitBase : MonoBehaviour
             agent.SetDestination(position);
     }
 
+    // IAttackableの実装
     public virtual void TakeDamage(float amount)
     {
+        ApplyDamage(amount, null);
+    }
+
+    // 攻撃者付き（ユニット同士の戦闘で使う）
+    public void TakeDamage(float amount, IAttackable attacker)
+    {
+        ApplyDamage(amount, attacker);
+    }
+
+    private void ApplyDamage(float amount, IAttackable attacker)
+    {
         ChangeState(UnitState.Combat);
-        float damage = Mathf.Max(1f, amount - defensePower); // 最低1ダメージ
+
+        float damage = Mathf.Max(1f, amount - defensePower);
         currentHealth -= damage;
 
         if (currentHealth <= 0f)
         {
             Die();
         }
+        else if (attacker != null)
+        {
+            SetTarget(attacker); // 反撃させたい場合
+        }
     }
+
 
     IEnumerator StartCooldown()
     {
@@ -85,26 +103,20 @@ public class UnitBase : MonoBehaviour
     }
 
 
-    public virtual void Attack(UnitBase target)
+    public virtual void Attack(IAttackable target)
     {
-        if (canAttack && target != null && teamId != target.teamId)
+        if (canAttack && target != null && TeamId != target.TeamId)
         {
-            ChangeState(UnitState.Combat);
-            // 射程内チェック
-            float dist = Vector3.Distance(transform.position, target.transform.position);
+            float dist = Vector3.Distance(transform.position, (target as MonoBehaviour).transform.position);
             if (dist <= attackRange)
             {
                 target.TakeDamage(attackPower);
-                target.SetTarget(this);//相手に攻撃したことを知らせる
-                canAttack=false;
+
+                canAttack = false;
                 StartCoroutine(StartCooldown());
             }
         }
     }
-
-
-
-
 
     protected virtual void Die()
     {
@@ -116,27 +128,31 @@ public class UnitBase : MonoBehaviour
 
     public virtual void SetSelected(bool selected)
     {
+        // 味方以外は無視
+        if (TeamId != Team.Player) return;
+
         isSelected = selected;
-        // 選択時のエフェクトなど表示もここで
     }
 
-    public virtual void SetTarget(UnitBase newTarget)
-    {
 
+    public virtual void SetTarget(IAttackable newTarget)
+    {
         // 古いターゲットのイベント解除
-        if (attackTarget != null)
+        if (attackTarget != null && attackTarget is UnitBase oldUnit)
         {
-            newTarget.OnUnitDeath -= OnTargetDeath;
+            oldUnit.OnUnitDeath -= OnTargetDeath;
         }
 
         attackTarget = newTarget;
 
-        if (attackTarget != null)
+        if (attackTarget != null && attackTarget is UnitBase unitTarget)
         {
-            attackTarget.OnUnitDeath += OnTargetDeath;
-            ChangeState(UnitState.Combat);
+            unitTarget.OnUnitDeath += OnTargetDeath;
         }
+
+        ChangeState(UnitState.Combat);
     }
+
 
     private void OnTargetDeath(UnitBase deadUnit)
     {
@@ -152,8 +168,6 @@ public class UnitBase : MonoBehaviour
     {
         currentState = state;
     }
-
-
 }
 
 public enum UnitState
@@ -163,3 +177,11 @@ public enum UnitState
     Combat,     // 戦闘態勢（敵を攻撃している or 攻撃対象を探している）
     Dead        // 死亡
 }
+
+public enum Team
+{
+    Neutral,
+    Player,
+    Enemy
+}
+

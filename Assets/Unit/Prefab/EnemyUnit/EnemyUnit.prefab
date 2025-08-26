@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 692702043723124900}
   - component: {fileID: 2957414006958578993}
   - component: {fileID: 2644693798942603837}
-  - component: {fileID: 437154278105886425}
+  - component: {fileID: 4374403510445097482}
   m_Layer: 0
   m_Name: EnemyUnit
   m_TagString: Enemy
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2845cb1d68d53b94abe8f490d2853cd8, type: 2}
+  - {fileID: 2100000, guid: 9489d726a138358429728c39bc8f8a05, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -129,7 +129,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &437154278105886425
+--- !u!114 &4374403510445097482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6275451474233905457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c157441a31495c43901f7e36ccb5553, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ac0cfb1c9dda534ca8e132940d2e9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
@@ -149,5 +149,4 @@ MonoBehaviour:
   attackCooldown: 1.5
   moveSpeed: 3.5
   currentState: 0
-  teamId: 1
   isSelected: 0

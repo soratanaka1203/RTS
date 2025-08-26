@@ -78,16 +78,13 @@ public class UnitSelectionManager : MonoBehaviour
             Vector3 screenPos = mainCamera.WorldToScreenPoint(unit.transform.position);
             if (screenPos.z > 0 && screenPos.x >= min.x && screenPos.x <= max.x && screenPos.y >= min.y && screenPos.y <= max.y)
             {
-                if (unit.teamId == 0)//ñ°ï˚êwâcÇæÇ¡ÇΩÇÁ
-                {
-                    unit.SetSelected(true);
-                    unitController.AddSelectedUnit(unit.GetComponent<UnityEngine.AI.NavMeshAgent>());
-                }
+                unit.SetSelected(true);
+                unitController.AddSelectedUnit(unit.GetComponent<UnityEngine.AI.NavMeshAgent>());
             }
             else
             {
-                // ñ°ï˚êwâcÇæÇ¡ÇΩÇÁ
-                if (unit.teamId == 0)unit.SetSelected(false);
+                
+                unit.SetSelected(false);
             }
         }
     }
@@ -100,11 +97,9 @@ public class UnitSelectionManager : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             UnitBase unit = hit.collider.GetComponent<UnitBase>();
-            if (unit != null && unit.teamId == 0)
-            {
-                unit.SetSelected(true);
-                unitController.AddSelectedUnit(unit.GetComponent<UnityEngine.AI.NavMeshAgent>());
-            }
+            
+            unit.SetSelected(true);
+            unitController.AddSelectedUnit(unit.GetComponent<UnityEngine.AI.NavMeshAgent>());
         }
     }
 }

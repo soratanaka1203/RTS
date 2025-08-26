@@ -7,12 +7,11 @@ public class SoldierUnit : UnitBase
 {
     protected override void Awake()
     {
-        base.Awake(); // UnitBase ‚Ì Awake ‚ğŒÄ‚Ño‚·
-
         maxHealth = 150f;
-        currentHealth = maxHealth;
 
         attackPower = 20f;
-        defensePower = 10f;
+        defensePower = 5f;
+
+        base.Awake(); // UnitBase ‚Ì Awake ‚ğŒÄ‚Ño‚·
     }
 }

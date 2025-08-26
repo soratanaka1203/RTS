@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static Interface;
 
 public class UnitController : MonoBehaviour
 {
@@ -18,15 +19,12 @@ public class UnitController : MonoBehaviour
                 foreach (NavMeshAgent agent in selectedUnits)
                 {
                     UnitBase unit = agent.GetComponent<UnitBase>();
-                    if (clickedObject.CompareTag("Enemy"))
+                    IAttackable target = clickedObject.GetComponent<IAttackable>();
+
+                    if (target != null && target.TeamId != unit.TeamId)
                     {
-                        // “G‚ğUŒ‚‘ÎÛ‚É‚·‚é
-                        UnitBase enemy = clickedObject.GetComponent<UnitBase>();
-                        if (enemy != null)
-                        {
-                            unit.SetTarget(enemy);        // í“¬‘Ô¨‚É“ü‚é
-                            unit.ChangeState(UnitState.Combat);
-                        }
+                        unit.SetTarget(target);
+                        unit.ChangeState(UnitState.Combat);
                     }
                     else if (clickedObject.CompareTag("Ground"))
                     {
