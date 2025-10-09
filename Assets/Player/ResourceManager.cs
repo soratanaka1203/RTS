@@ -1,10 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance;
+    [SerializeField] TextMeshProUGUI coinText;
 
-    public int coin = 0;
+    public int coinAmount = 0;
 
     private void Awake()
     {
@@ -13,14 +15,16 @@ public class ResourceManager : MonoBehaviour
 
     public void AddCoin(int amount)
     {
-        coin += amount;
+        coinAmount += amount;
+        coinText.text = $"Coin:{coinAmount}";
     }
 
     public bool SpendCoin(int amount)
     {
-        if (coin >= amount)
+        if (coinAmount >= amount)
         {
-            coin -= amount;
+            coinAmount -= amount;
+            coinText.text = $"Coin:{coinAmount}";
             return true;
         }
         return false;
