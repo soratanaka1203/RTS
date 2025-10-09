@@ -48,7 +48,7 @@ public class UnitBase : MonoBehaviour, IAttackable
                 break;
 
             case UnitState.Combat:
-                if (attackTarget != null)
+                if (attackTarget != null && agent.isOnNavMesh)
                 {
                     MoveTo(attackTarget.Position);
                     Attack(attackTarget);
@@ -109,8 +109,8 @@ public class UnitBase : MonoBehaviour, IAttackable
     {
         if (canAttack && target != null && TeamId != target.TeamId)
         {
-            float dist = Vector3.Distance(transform.position, (target as MonoBehaviour).transform.position);
-            if (dist <= attackRange)
+            float distance = Vector3.Distance(transform.position, (target as MonoBehaviour).transform.position);
+            if (distance <= attackRange)
             {
                 target.TakeDamage(attackPower);
 

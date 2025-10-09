@@ -60,6 +60,7 @@ public abstract class BuildingBase : MonoBehaviour, IAttackable
         {
             DestroyBuilding();
         }
+        Debug.Log("Œš•¨‚ªƒ_ƒ[ƒW‚ğó‚¯‚Ü‚µ‚½");
     }
 
     /// <summary>
