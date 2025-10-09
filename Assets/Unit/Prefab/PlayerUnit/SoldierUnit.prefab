@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5789967804705864928}
   - component: {fileID: 5332547550929192591}
   - component: {fileID: 1842340500946106050}
+  - component: {fileID: 4474003568153800398}
   - component: {fileID: 7560361567114037413}
   - component: {fileID: 9127914417263765501}
   - component: {fileID: 5446946613340558562}
@@ -86,6 +87,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &4474003568153800398
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918266166948670908}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &7560361567114037413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -149,5 +171,4 @@ MonoBehaviour:
   attackCooldown: 1.5
   moveSpeed: 3.5
   currentState: 0
-  teamId: 0
   isSelected: 0

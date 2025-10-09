@@ -12,29 +12,31 @@ public class UnitController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                GameObject clickedObject = hit.collider.gameObject;
+                // クリック対象からIAttackableを探す
+                IAttackable target = hit.collider.GetComponent<IAttackable>();
 
                 foreach (NavMeshAgent agent in selectedUnits)
                 {
                     UnitBase unit = agent.GetComponent<UnitBase>();
-                    IAttackable target = clickedObject.GetComponent<IAttackable>();
 
                     if (target != null && target.TeamId != unit.TeamId)
                     {
+                        // 敵（ユニット or 建物）を攻撃対象に
                         unit.SetTarget(target);
                         unit.ChangeState(UnitState.Combat);
                     }
-                    else if (clickedObject.CompareTag("Ground"))
+                    else if (hit.collider.CompareTag("Ground"))
                     {
-                        unit.ChangeState(UnitState.Moving);
                         // 移動命令
                         MoveUnitsWithSpacing(hit.point, selectedUnits);
                     }
                 }
             }
         }
+
 
     }
 
@@ -52,6 +54,7 @@ public class UnitController : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             UnitBase unit = selectedAgents[i].GetComponent<UnitBase>();
+            unit .ChangeState(UnitState.Moving);
             int row = i / columns;
             int col = i % columns;
 

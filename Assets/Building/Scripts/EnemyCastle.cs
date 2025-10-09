@@ -7,11 +7,12 @@ public class EnemyCastle : BuildingBase
     protected override void Awake()
     {
         maxHealth = 1500;
+        TeamId = Team.Enemy;
         base.Awake();
     }
 
     protected override void OnConstructed()
     {
-        Debug.Log("城が完成！リソースを生産開始します。");
+        
     }
 }

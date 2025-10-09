@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Interface;
 
 public class EnemyUnit : UnitBase
 {
@@ -14,5 +15,16 @@ public class EnemyUnit : UnitBase
 
         base.Awake(); // UnitBase ‚Ì Awake ‚ğŒÄ‚Ño‚·
         Debug.Log(gameObject.name + " TeamId: " + TeamId);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        IAttackable unit = other.GetComponent<IAttackable>();
+        if (unit != null && unit.TeamId != TeamId)
+        {
+            Debug.Log("‹ß‚­‚É“G‚ğ”­Œ©");
+            attackTarget = unit;
+            ChangeState(UnitState.Combat);
+        }
     }
 }

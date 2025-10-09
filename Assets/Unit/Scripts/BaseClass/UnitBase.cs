@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using static Interface;
 using static UnityEngine.GraphicsBuffer;
 
-public class UnitBase : MonoBehaviour
+public class UnitBase : MonoBehaviour, IAttackable
 {
     protected NavMeshAgent agent;
 
@@ -48,9 +48,17 @@ public class UnitBase : MonoBehaviour
                 break;
 
             case UnitState.Combat:
-                MoveTo(attackTarget.Position); 
-                Attack(attackTarget);
+                if (attackTarget != null)
+                {
+                    MoveTo(attackTarget.Position);
+                    Attack(attackTarget);
+                }
+                else
+                {
+                    ChangeState(UnitState.Idle); // ターゲットがいなければ待機に戻す
+                }
                 break;
+
 
             case UnitState.Moving:
                 break;
@@ -72,16 +80,8 @@ public class UnitBase : MonoBehaviour
         ApplyDamage(amount, null);
     }
 
-    // 攻撃者付き（ユニット同士の戦闘で使う）
-    public void TakeDamage(float amount, IAttackable attacker)
-    {
-        ApplyDamage(amount, attacker);
-    }
-
     private void ApplyDamage(float amount, IAttackable attacker)
     {
-        ChangeState(UnitState.Combat);
-
         float damage = Mathf.Max(1f, amount - defensePower);
         currentHealth -= damage;
 
@@ -93,6 +93,8 @@ public class UnitBase : MonoBehaviour
         {
             SetTarget(attacker); // 反撃させたい場合
         }
+        ChangeState(UnitState.Combat);
+
     }
 
 
@@ -163,6 +165,8 @@ public class UnitBase : MonoBehaviour
             ChangeState(UnitState.Idle);
         }
     }
+
+    
 
     public void ChangeState(UnitState state)
     {

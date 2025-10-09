@@ -8,6 +8,7 @@ public class Castle : BuildingBase
     protected override void Awake()
     {
         maxHealth = 1500;
+        TeamId = Team.Player;
         base.Awake();
     }
 

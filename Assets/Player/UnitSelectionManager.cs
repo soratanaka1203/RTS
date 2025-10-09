@@ -75,6 +75,7 @@ public class UnitSelectionManager : MonoBehaviour
 
         foreach (var unit in FindObjectsOfType<UnitBase>())
         {
+            if (unit.TeamId == Team.Enemy) return;
             Vector3 screenPos = mainCamera.WorldToScreenPoint(unit.transform.position);
             if (screenPos.z > 0 && screenPos.x >= min.x && screenPos.x <= max.x && screenPos.y >= min.y && screenPos.y <= max.y)
             {
@@ -96,8 +97,9 @@ public class UnitSelectionManager : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            UnitBase unit = hit.collider.GetComponent<UnitBase>();
-            
+            UnitBase unit = hit.collider.GetComponentInParent<UnitBase>();
+            if (unit == null) return;
+            if (unit.TeamId == Team.Enemy) return;
             unit.SetSelected(true);
             unitController.AddSelectedUnit(unit.GetComponent<UnityEngine.AI.NavMeshAgent>());
         }
