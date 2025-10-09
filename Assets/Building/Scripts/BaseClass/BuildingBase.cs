@@ -56,11 +56,11 @@ public abstract class BuildingBase : MonoBehaviour, IAttackable
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        Debug.Log("建物がダメージを受けました");
         if (currentHealth <= 0)
         {
             DestroyBuilding();
         }
-        Debug.Log("建物がダメージを受けました");
     }
 
     /// <summary>

@@ -11,7 +11,7 @@ public class UnitSpawner : MonoBehaviour
     {
         if (ResourceManager.Instance.coinAmount >= unitPrice)
         {
-            Instantiate(unitPrefab, transform);
+            Instantiate(unitPrefab, transform.position, Quaternion.identity);
             ResourceManager.Instance.SpendCoin(unitPrice);
         }
         else Debug.Log("ƒRƒCƒ“‚ª‘«‚è‚Ü‚¹‚ñ");

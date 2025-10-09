@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(spawnInterval) ;
-            UnitBase enemy = Instantiate(enemyPrefab, transform).GetComponent<UnitBase>();
+            UnitBase enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity).GetComponent<UnitBase>();
             enemy.SetTarget(playerCastle);
         }
     }

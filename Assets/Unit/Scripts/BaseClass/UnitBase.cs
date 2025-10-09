@@ -15,7 +15,7 @@ public class UnitBase : MonoBehaviour, IAttackable
 
     public float attackPower = 10f;       // 攻撃力
     public float defensePower = 0f;       // 防御力（ダメージ軽減）
-    public float attackRange = 2f;        // 攻撃射程
+    public float attackRange = 4f;        // 攻撃射程
     public float attackCooldown = 1.5f;   // 攻撃間隔（秒）
     protected bool canAttack = true;
     protected IAttackable attackTarget;
@@ -26,8 +26,8 @@ public class UnitBase : MonoBehaviour, IAttackable
     public bool IsAlive => currentHealth > 0;
     public Vector3 Position => transform.position;
 
-    [Header("選択状態")]
-    public bool isSelected = false;
+    //[Header("選択状態")]
+    //public bool isSelected = false;
 
     // 死亡時に通知するイベント
     public event Action<UnitBase> OnUnitDeath;
@@ -128,13 +128,13 @@ public class UnitBase : MonoBehaviour, IAttackable
         Destroy(gameObject);
     }
 
-    public virtual void SetSelected(bool selected)
-    {
-        // 味方以外は無視
-        if (TeamId != Team.Player) return;
+    //public virtual void SetSelected(bool selected)
+    //{
+    //    // 味方以外は無視
+    //    if (TeamId != Team.Player) return;
 
-        isSelected = selected;
-    }
+    //    isSelected = selected;
+    //}
 
 
     public virtual void SetTarget(IAttackable newTarget)

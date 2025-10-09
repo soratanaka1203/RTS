@@ -75,32 +75,27 @@ public class UnitSelectionManager : MonoBehaviour
 
         foreach (var unit in FindObjectsOfType<UnitBase>())
         {
-            if (unit.TeamId == Team.Enemy) return;
+            if (unit.TeamId == Team.Enemy) continue;
             Vector3 screenPos = mainCamera.WorldToScreenPoint(unit.transform.position);
             if (screenPos.z > 0 && screenPos.x >= min.x && screenPos.x <= max.x && screenPos.y >= min.y && screenPos.y <= max.y)
             {
-                unit.SetSelected(true);
+                //unit.SetSelected(true);
                 unitController.AddSelectedUnit(unit.GetComponent<UnityEngine.AI.NavMeshAgent>());
             }
-            else
-            {
-                
-                unit.SetSelected(false);
-            }
+
         }
     }
 
     void ClickSelectUnit()
     {
         unitController.ClearSelectedAgent();
-
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             UnitBase unit = hit.collider.GetComponentInParent<UnitBase>();
             if (unit == null) return;
             if (unit.TeamId == Team.Enemy) return;
-            unit.SetSelected(true);
+            //unit.SetSelected(true);
             unitController.AddSelectedUnit(unit.GetComponent<UnityEngine.AI.NavMeshAgent>());
         }
     }

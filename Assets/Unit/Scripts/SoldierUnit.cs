@@ -24,7 +24,7 @@ public class SoldierUnit : UnitBase
         if (unit != null && unit.TeamId != TeamId)
         {
             Debug.Log("‹ß‚­‚É“G‚ð”­Œ©");
-            attackTarget = unit;
+            SetTarget(unit);
             ChangeState(UnitState.Combat);
         }
     }

@@ -10,11 +10,11 @@ public class EnemyUnit : UnitBase
         maxHealth = 150f;
 
         attackPower = 20f;
+        defensePower = 5f;
 
         TeamId = Team.Enemy;
 
         base.Awake(); // UnitBase ‚Ì Awake ‚ğŒÄ‚Ño‚·
-        Debug.Log(gameObject.name + " TeamId: " + TeamId);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +23,7 @@ public class EnemyUnit : UnitBase
         if (unit != null && unit.TeamId != TeamId)
         {
             Debug.Log("‹ß‚­‚É“G‚ğ”­Œ©");
-            attackTarget = unit;
+            SetTarget(unit);
             ChangeState(UnitState.Combat);
         }
     }
