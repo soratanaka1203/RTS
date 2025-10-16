@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b841f8730e5b964085aec639f7bd45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingName: 
+  buildingName: Castle
   cost: 100
   buildTime: 5
   maxHealth: 1000
