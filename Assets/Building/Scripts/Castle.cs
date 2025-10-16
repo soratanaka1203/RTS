@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Castle : BuildingBase
 {
     public int goldPerSecond = 10;  // 1秒あたり増える量
+    public static event Action<Team> OnCastleDestroyed; // イベント通知
 
     protected override void Awake()
     {
@@ -25,5 +27,10 @@ public class Castle : BuildingBase
             ResourceManager.Instance.AddCoin(goldPerSecond);
             yield return new WaitForSeconds(1f); // 1秒待つ
         }
+    }
+    protected override void DestroyBuilding()
+    {
+        OnCastleDestroyed?.Invoke(TeamId);
+        Destroy(gameObject);
     }
 }
