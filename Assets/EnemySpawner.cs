@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private BuildingBase playerCastle;
-    float spawnInterval = 5f;
+    float spawnInterval = 7f;
 
     private void Start()
     {
@@ -19,8 +19,8 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(spawnInterval) ;
-            UnitBase enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity).GetComponent<UnitBase>();
-            enemy.SetTarget(playerCastle);
+            EnemyUnit enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity).GetComponent<EnemyUnit>();
+            enemy.defaultTarget = playerCastle;
         }
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9127914417263765501}
   - component: {fileID: 5446946613340558562}
   - component: {fileID: -7972456884536513137}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SoldierUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &7560361567114037413
 BoxCollider:
@@ -172,6 +172,9 @@ MonoBehaviour:
   attackCooldown: 1.5
   moveSpeed: 3.5
   currentState: 0
+  attackableMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!54 &-7972456884536513137
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -23,7 +23,6 @@ public class SoldierUnit : UnitBase
         IAttackable unit = other.GetComponent<IAttackable>();
         if (unit != null && unit.TeamId != TeamId)
         {
-            Debug.Log("‹ß‚­‚É“G‚ð”­Œ©");
             SetTarget(unit);
             ChangeState(UnitState.Combat);
         }

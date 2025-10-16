@@ -26,9 +26,6 @@ public class UnitBase : MonoBehaviour, IAttackable
     public bool IsAlive => currentHealth > 0;
     public Vector3 Position => transform.position;
 
-    //[Header("選択状態")]
-    //public bool isSelected = false;
-
     // 死亡時に通知するイベント
     public event Action<UnitBase> OnUnitDeath;
 
@@ -104,18 +101,25 @@ public class UnitBase : MonoBehaviour, IAttackable
         canAttack = true;
     }
 
-
+    [SerializeField] private LayerMask attackableMask;
     public virtual void Attack(IAttackable target)
     {
         if (canAttack && target != null && TeamId != target.TeamId)
         {
-            float distance = Vector3.Distance(transform.position, (target as MonoBehaviour).transform.position);
-            if (distance <= attackRange)
-            {
-                target.TakeDamage(attackPower);
+            Vector3 direction = (target.Position - transform.position).normalized;
 
-                canAttack = false;
-                StartCoroutine(StartCooldown());
+            // Ray を飛ばして、間に障害物やターゲットがあるか調べる
+            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, attackRange, attackableMask))
+            {
+                // Ray がターゲットに当たったら攻撃
+                IAttackable hitTarget = hit.collider.GetComponentInParent<IAttackable>();
+                if (hitTarget == target)
+                {
+                    target.TakeDamage(attackPower);
+
+                    canAttack = false;
+                    StartCoroutine(StartCooldown());
+                }
             }
         }
     }
@@ -127,15 +131,6 @@ public class UnitBase : MonoBehaviour, IAttackable
         // 死亡演出など（派生クラスで拡張可能）
         Destroy(gameObject);
     }
-
-    //public virtual void SetSelected(bool selected)
-    //{
-    //    // 味方以外は無視
-    //    if (TeamId != Team.Player) return;
-
-    //    isSelected = selected;
-    //}
-
 
     public virtual void SetTarget(IAttackable newTarget)
     {
