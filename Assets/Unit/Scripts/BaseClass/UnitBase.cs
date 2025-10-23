@@ -18,7 +18,7 @@ public class UnitBase : MonoBehaviour, IAttackable
     public float attackRange = 4f;        // UŒ‚Ë’ö
     public float attackCooldown = 1.5f;   // UŒ‚ŠÔŠui•bj
     protected bool canAttack = true;
-    protected IAttackable attackTarget;
+    protected IAttackable attackTarget;   //UŒ‚–Ú•W
     public float moveSpeed = 3.5f;        // ˆÚ“®‘¬“x
     public UnitState currentState = UnitState.Idle;//ƒ†ƒjƒbƒg‚Ìó‘Ô
 
@@ -37,7 +37,7 @@ public class UnitBase : MonoBehaviour, IAttackable
         agent.speed = moveSpeed;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         switch (currentState)
         {
@@ -173,7 +173,7 @@ public enum UnitState
 {
     Idle,       // ‘Ò‹@’†
     Moving,     // ˆÚ“®’†
-    Combat,     // í“¬‘Ô¨i“G‚ğUŒ‚‚µ‚Ä‚¢‚é or UŒ‚‘ÎÛ‚ğ’T‚µ‚Ä‚¢‚éj
+    Combat,     // í“¬‘Ô¨
     Dead        // €–S
 }
 

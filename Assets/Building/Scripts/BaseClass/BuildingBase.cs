@@ -56,7 +56,6 @@ public abstract class BuildingBase : MonoBehaviour, IAttackable
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        Debug.Log("建物がダメージを受けました");
         if (currentHealth <= 0)
         {
             DestroyBuilding();
@@ -68,8 +67,6 @@ public abstract class BuildingBase : MonoBehaviour, IAttackable
     /// </summary>
     protected virtual void DestroyBuilding()
     {
-        // エフェクトやSEを再生して消す
-        Debug.Log($"{buildingName} destroyed!");
         Destroy(gameObject);
     }
 

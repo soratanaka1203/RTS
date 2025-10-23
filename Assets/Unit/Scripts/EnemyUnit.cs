@@ -7,7 +7,7 @@ using static Interface;
 
 public class EnemyUnit : UnitBase
 {
-    [SerializeField] public IAttackable defaultTarget;//プレイヤーのお城
+    [SerializeField] public IAttackable defaultTarget;//プレイヤーの本拠地
 
     protected override void Awake()
     {
@@ -31,12 +31,14 @@ public class EnemyUnit : UnitBase
         }
     }
 
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
         if (attackTarget == null)
         {
             SearchForNewTarget();
         }
+
+        base.FixedUpdate();
     }
 
     public float searchRadius = 10f;
@@ -54,6 +56,7 @@ public class EnemyUnit : UnitBase
         if (candidates.Count == 0)
         {
             SetTarget(defaultTarget);
+            Debug.Log($"新しいターゲットを設定: {attackTarget}");
             return;
         }
 
@@ -62,7 +65,6 @@ public class EnemyUnit : UnitBase
             .OrderBy(a => Vector3.Distance(transform.position, ((MonoBehaviour)a).transform.position))
             .First();
         SetTarget(newTarget);
-        Debug.Log($"新しいターゲットを設定: {attackTarget}");
     }
 
 }

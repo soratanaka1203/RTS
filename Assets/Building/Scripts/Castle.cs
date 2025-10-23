@@ -14,9 +14,9 @@ public class Castle : BuildingBase
         base.Awake();
     }
 
+    //お城が完成したときに呼ばれる処理
     protected override void OnConstructed()
     {
-        Debug.Log("城が完成！リソースを生産開始します。");
         StartCoroutine(ProduceResource());
     }
 

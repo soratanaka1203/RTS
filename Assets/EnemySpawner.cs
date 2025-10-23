@@ -21,6 +21,7 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval) ;
             EnemyUnit enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity).GetComponent<EnemyUnit>();
             enemy.defaultTarget = playerCastle;
+            enemy.ChangeState(UnitState.Combat);
         }
     }
 }

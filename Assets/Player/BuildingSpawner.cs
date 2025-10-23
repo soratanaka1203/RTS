@@ -49,7 +49,6 @@ public class BuildingSpawner : MonoBehaviour
         {
             previewObject.SetActive(true);
             isBuildMode = true;
-            Debug.Log("建設モード開始");
         }
     }
 }
